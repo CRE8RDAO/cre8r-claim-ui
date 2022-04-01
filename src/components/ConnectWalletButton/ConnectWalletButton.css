@@ -1,0 +1,24 @@
+.connect-wallet-button {
+  width: 186px;
+  height: 53px;
+  left: 1155.5px;
+  top: 18.5px;
+  color: white;
+  background: #222222;
+  border-radius: 12px;
+  padding: 7px 14px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 24px;
+  cursor: pointer;
+  border: none;
+  box-shadow: inset 0px 0px 0px 1px #222222;
+}
+
+.connect-wallet-button:hover {
+  border: #fff 2px solid;
+  font-size: 16px;
+  background: #222222;
+  box-shadow: 0px 0px 0px 3px grey;
+}

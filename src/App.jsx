@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import cre8rLogo from "./assets/cre8r_logo.png";
 import "./App.css";
-import abi from "./contracts/claim.json";
-import { ethers } from "ethers";
+import { ClaimButton } from "./components/ClaimButton";
 
+import { ethers } from "ethers";
+import abi from "./contracts/claim.json";
+import { Topbar } from "./components/Topbar";
 const contractAddress = "0x355638a4eCcb777794257f22f50c289d4189F245";
 
 function App() {
@@ -30,23 +33,9 @@ function App() {
     }
   };
 
-  const connectWalletHandler = async () => {
-    const { ethereum } = window;
-
-    if (!ethereum) {
-      alert("Please install Metamask!");
-    }
-
-    try {
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      console.log("Found an account! Address: ", accounts[0]);
-      setCurrentAccount(accounts[0]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
 
   const claimHandler = async () => {
     try {
@@ -74,39 +63,32 @@ function App() {
     }
   };
 
-  const connectWalletButton = () => {
-    return (
-      <button
-        onClick={connectWalletHandler}
-        className="cta-button connect-wallet-button"
-      >
-        Connect Wallet
-      </button>
-    );
-  };
-
-  const ClaimButton = () => {
-    return (
-      <button onClick={claimHandler} className="cta-button mint-nft-button">
-        Claim
-      </button>
-    );
-  };
-
   useEffect(() => {
     checkWalletIsConnected();
   }, []);
 
   return (
-    <div className="main-app">
-      <h1>CRE8R CLAIMER</h1>
-      <h2>
-        <b>Account:</b> {currentAccount}
-      </h2>
-      <div>{currentAccount ? ClaimButton() : connectWalletButton()}</div>
-      <br />
-      <p>{`Status: ${status}`}</p>
-    </div>
+    <>
+      <Topbar />
+      <div className="main-app">
+        <div className="modal">
+          <div className="brand-container">
+            <img src={cre8rLogo} alt="cre8r logo" />
+          </div>
+          <div>
+            {/* <h1>Claim your free CRE8R token</h1> */}
+            <p>
+              Available: <span>1,000,000</span>
+            </p>
+          </div>
+          <div className="btn-container">
+            {currentAccount ? (
+              <ClaimButton onClickHandler={claimHandler} />
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

@@ -1,22 +1,28 @@
 .main-app {
-    text-align: center;
-    margin: 100px;
+  width: 100%;
+  height: 90vh;
+  background-color: #222222;
 }
 
-.cta-button {
-    padding: 15px;
-    border: none;
-    border-radius: 12px;
-    min-width: 250px;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
+.main-app .modal {
+  top: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  position: absolute;
+  width: 43.75rem;
+  height: 38.313rem;
+  margin-left: 30rem;
+  background: #ffffff;
+  border-radius: 32px;
+  gap: 0.65rem;
 }
 
-.connect-wallet-button {
-    background: rgb(32, 129, 226);
+.main-app .modal .brand-container {
+  padding-left: 3rem;
 }
 
-.mint-nft-button {
-    background: orange;
+.btn-container {
 }
