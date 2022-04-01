@@ -25,6 +25,7 @@ function App() {
         setCurrentAccount(account);
       } else {
         setStatus("No authorized account found");
+        setCurrentAccount("");
       }
     }
   };
