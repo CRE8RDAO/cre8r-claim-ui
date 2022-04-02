@@ -48,7 +48,7 @@ export const loadWeb3 = () => async (dispatch) => {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
-      dispatch(account_loaded(accounts[0]));
+      if (accounts.length) dispatch(account_loaded(accounts[0]));
     } catch (err) {
       console.log(err);
       dispatch(account_loaded_error(err));
@@ -60,14 +60,13 @@ export const loadWeb3 = () => async (dispatch) => {
 };
 
 export const loadClaimableBalance = () => async (dispatch, getState) => {
-  const { account } = getState();
   try {
     const { ethereum } = window;
 
     if (ethereum) {
+      const { account } = getState().web3;
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-
       const claimContract = new ethers.Contract(
         process.env.REACT_APP_VESTING_CONTRACT_ADDRESS,
         abi,
@@ -83,6 +82,7 @@ export const loadClaimableBalance = () => async (dispatch, getState) => {
 };
 
 export const claimBalance = () => async (dispatch, getState) => {
+  const { balance } = getState().web3;
   try {
     const { ethereum } = window;
 
@@ -94,18 +94,23 @@ export const claimBalance = () => async (dispatch, getState) => {
         abi,
         signer
       );
+      if (balance !== 0) {
+        dispatch(change_status("Initialize payment"));
+        let claimTxn = await claimContract.claim();
 
-      change_status("Initialize payment");
-      let claimTxn = await claimContract.claim();
+        dispatch(change_status("Claiming... please wait"));
+        await claimTxn.wait();
 
-      change_status("Claiming... please wait");
-      await claimTxn.wait();
-
-      change_status(
-        `Claimed, see transaction: https://ftmscan.com/tx/${claimTxn.hash}`
-      );
+        dispatch(
+          change_status(
+            `Claimed, see transaction: https://ftmscan.com/tx/${claimTxn.hash}`
+          )
+        );
+      } else {
+        dispatch(change_status(`Nothing to claim :(`));
+      }
     } else {
-      change_status("Ethereum object does not exist");
+      dispatch(change_status("Ethereum object does not exist"));
     }
   } catch (err) {
     console.log(err);

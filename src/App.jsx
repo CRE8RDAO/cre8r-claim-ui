@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadWeb3, loadClaimableBalance } from "./store/slices/web3Slice";
+import {
+  loadWeb3,
+  loadClaimableBalance,
+  claimBalance,
+} from "./store/slices/web3Slice";
 
 import cre8rLogo from "./assets/cre8r_logo.png";
 import "./App.css";
@@ -21,8 +25,9 @@ function App() {
   }, [account, dispatch]);
 
   const handleClaimButton = () => {
-    dispatch();
+    dispatch(claimBalance());
   };
+
   return (
     <>
       <nav>
