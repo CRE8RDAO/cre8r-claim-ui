@@ -48,7 +48,10 @@ export const loadWeb3 = () => async (dispatch) => {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
-      if (accounts.length) dispatch(account_loaded(accounts[0]));
+      if (accounts.length) {
+        dispatch(account_loaded(accounts[0]));
+        dispatch(change_status(`Connected`));
+      }
     } catch (err) {
       console.log(err);
       dispatch(account_loaded_error(err));

@@ -5,7 +5,7 @@ import {
   loadClaimableBalance,
   claimBalance,
 } from "./store/slices/web3Slice";
-
+import { toast } from "react-toastify";
 import cre8rLogo from "./assets/cre8r_logo.png";
 import "./App.css";
 
@@ -32,7 +32,10 @@ function App() {
 
   useEffect(() => {
     if (status_message === "Nothing to claim :((") {
-      window.alert("Contract says you have no tokens to claim!");
+      toast("Contract says you have no tokens to claim!");
+    } else if (status_message !== "") {
+      toast(status_message);
+      // dispatch clean status message ?
     }
   }, [status_message]);
 
@@ -55,6 +58,7 @@ function App() {
           </button>
         </div>
       </nav>
+
       <div className="main-app">
         <div className="modal">
           <div className="brand-container">
