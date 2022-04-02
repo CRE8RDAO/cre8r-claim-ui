@@ -114,6 +114,7 @@ export const claimBalance = () => async (dispatch, getState) => {
     }
   } catch (err) {
     console.log(err);
+    dispatch(change_status(`Nothing to claim :((`));
   }
 };
 

@@ -10,7 +10,9 @@ import cre8rLogo from "./assets/cre8r_logo.png";
 import "./App.css";
 
 function App() {
-  const { account, balance } = useSelector((state) => state.web3);
+  const { account, balance, status_message } = useSelector(
+    (state) => state.web3
+  );
 
   const dispatch = useDispatch();
 
@@ -27,6 +29,12 @@ function App() {
   const handleClaimButton = () => {
     dispatch(claimBalance());
   };
+
+  useEffect(() => {
+    if (status_message === "Nothing to claim :((") {
+      window.alert("Contract says you have no tokens to claim!");
+    }
+  }, [status_message]);
 
   return (
     <>
