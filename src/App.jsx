@@ -6,7 +6,7 @@ import { ClaimButton } from "./components/ClaimButton";
 import { ethers } from "ethers";
 import abi from "./contracts/claim.json";
 import { Topbar } from "./components/Topbar";
-const contractAddress = "0x355638a4eCcb777794257f22f50c289d4189F245";
+const contractAddress = "0x81c4a6FA0146d91Da3F58844894dA32a072b4839";
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState(null);
