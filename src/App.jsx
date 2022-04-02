@@ -11,6 +11,7 @@ const contractAddress = "0x81c4a6FA0146d91Da3F58844894dA32a072b4839";
 function App() {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [status, setStatus] = useState("");
+  const [claimableAmmount, setClaimableAmmount] = useState(0);
 
   const checkWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -26,16 +27,18 @@ function App() {
         const account = accounts[0];
         setStatus(`Found an authorized account: ${account}`);
         setCurrentAccount(account);
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const claimContract = new ethers.Contract(contractAddress, abi, signer);
+
+        const vestedAmount = await claimContract.getClaim(account);
+        setClaimableAmmount(vestedAmount.toString());
       } else {
         setStatus("No authorized account found");
         setCurrentAccount("");
       }
     }
   };
-
-  useEffect(() => {
-    console.log(status);
-  }, [status]);
 
   const claimHandler = async () => {
     try {
@@ -78,7 +81,7 @@ function App() {
           <div>
             {/* <h1>Claim your free CRE8R token</h1> */}
             <p>
-              Available: <span>1,000,000</span>
+              Available: <span>{`${claimableAmmount}`} CRE8R</span>
             </p>
           </div>
           <div className="btn-container">
