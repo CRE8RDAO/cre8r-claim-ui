@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import cre8rLogo from "./assets/cre8r_logo.png";
 import "./App.css";
-import { ClaimButton } from "./components/ClaimButton";
 
 import { ethers } from "ethers";
 import abi from "./contracts/claim.json";
-import { Topbar } from "./components/Topbar";
 const contractAddress = "0x81c4a6FA0146d91Da3F58844894dA32a072b4839";
 
 function App() {
-  const [currentAccount, setCurrentAccount] = useState(null);
+  const [currentAccount, setCurrentAccount] = useState("");
   const [status, setStatus] = useState("");
   const [claimableAmmount, setClaimableAmmount] = useState(0);
 
@@ -66,28 +64,68 @@ function App() {
     }
   };
 
+  const connectWalletHandler = async () => {
+    const { ethereum } = window;
+
+    if (!ethereum) {
+      alert("Please install Metamask!");
+    }
+
+    try {
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      console.log("Found an account! Address: ", accounts[0]);
+      setCurrentAccount(accounts[0]); // with redux
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     checkWalletIsConnected();
   }, []);
 
+  useEffect(() => {
+    console.log("Status ::: ", status);
+  }, [status]);
   return (
     <>
-      <Topbar />
+      <nav>
+        <div className="brand-container">
+          <img src={cre8rLogo} alt="cre8r logo" />
+        </div>
+        <h1>CRE8R Claimer</h1>
+        <div className="btn-container">
+          <button
+            onClick={connectWalletHandler}
+            className="connect-wallet-button"
+            disabled={currentAccount !== ""}
+          >
+            {currentAccount
+              ? currentAccount.substring(0, 8) + "..."
+              : "Connect Wallet"}
+          </button>
+        </div>
+      </nav>
       <div className="main-app">
         <div className="modal">
           <div className="brand-container">
             <img src={cre8rLogo} alt="cre8r logo" />
           </div>
           <div>
-            {/* <h1>Claim your free CRE8R token</h1> */}
             <p>
               Available: <span>{`${claimableAmmount}`} CRE8R</span>
             </p>
           </div>
           <div className="btn-container">
-            {currentAccount ? (
-              <ClaimButton onClickHandler={claimHandler} />
-            ) : null}
+            {currentAccount && claimableAmmount ? (
+              <button onClick={claimHandler} className="claim-button">
+                Claim CRE8R
+              </button>
+            ) : (
+              <span>Nothing to claim ...</span>
+            )}
           </div>
         </div>
       </div>
