@@ -66,7 +66,8 @@ function App() {
           </div>
           <div>
             <p>
-              Available: <span>{`${balance ?? "0,0"}`} CRE8R</span>
+              Available:{" "}
+              <span>{`${balance.length ? balance : "0,00"}`} CRE8R</span>
             </p>
           </div>
           <div className="btn-container">
