@@ -6,8 +6,7 @@ import {
   claimBalance,
 } from './store/slices/web3Slice';
 import { toast } from 'react-toastify';
-import cre8rLogo from './assets/CR8R.png';
-import cre8rAltLogo from './assets/cre8r_logo.png';
+import cre8rLogo from './assets/logo-515x512.png';
 import './App.css';
 
 function App() {
@@ -62,7 +61,7 @@ function App() {
       <div className="main-app">
         <div className="modal">
           <div className="brand-container">
-            <img src={cre8rAltLogo} alt="cre8r logo" />
+            <img src={cre8rLogo} alt="cre8r logo" />
           </div>
           <div className="vested-container">
             <h3>0.0 vested</h3>
