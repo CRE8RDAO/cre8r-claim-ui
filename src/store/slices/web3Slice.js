@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ethers } from "ethers";
+import { ethers, FixedNumber } from "ethers";
 import abi from "../../contracts/claim.json";
 
 const initialState = {
   connected: false,
   account: "",
-  balance: 0,
+  balance: "",
   status_message: "",
 };
 
@@ -77,7 +77,11 @@ export const loadClaimableBalance = () => async (dispatch, getState) => {
       );
 
       const vestedAmount = await claimContract.getClaim(account);
-      const balance = vestedAmount.toNumber();
+
+      const balance = FixedNumber.fromString(
+        ethers.utils.formatUnits(vestedAmount, 18)
+      ).toString();
+
       dispatch(balance_loaded(balance));
     }
   } catch (error) {
