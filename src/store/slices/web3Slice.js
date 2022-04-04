@@ -104,7 +104,7 @@ export const claimBalance = () => async (dispatch, getState) => {
       );
       if (balance !== 0) {
         dispatch(change_status("Initialize payment"));
-        let claimTxn = await claimContract.claim();
+        const claimTxn = await claimContract.claim();
 
         dispatch(change_status("Claiming... please wait"));
         await claimTxn.wait();
