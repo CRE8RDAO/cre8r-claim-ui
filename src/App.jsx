@@ -1,13 +1,14 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   loadWeb3,
   loadClaimableBalance,
   claimBalance,
-} from "./store/slices/web3Slice";
-import { toast } from "react-toastify";
-import cre8rLogo from "./assets/CR8R.png";
-import "./App.css";
+} from './store/slices/web3Slice';
+import { toast } from 'react-toastify';
+import cre8rLogo from './assets/CR8R.png';
+import cre8rAltLogo from './assets/cre8r_logo.png';
+import './App.css';
 
 function App() {
   const { account, balance, status_message } = useSelector(
@@ -21,7 +22,7 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (account !== "") {
+    if (account !== '') {
       dispatch(loadClaimableBalance());
     }
   }, [account, dispatch]);
@@ -31,9 +32,9 @@ function App() {
   };
 
   useEffect(() => {
-    if (status_message === "Nothing to claim :((") {
-      toast("Contract says you have no tokens to claim!");
-    } else if (status_message !== "") {
+    if (status_message === 'Nothing to claim :((') {
+      toast('Contract says you have no tokens to claim!');
+    } else if (status_message !== '') {
       toast(status_message);
       // dispatch clean status message ?
     }
@@ -45,16 +46,15 @@ function App() {
         <div className="brand-container">
           <img src={cre8rLogo} alt="cre8r logo" />
         </div>
-        <h1>CRE8R Claimer</h1>
         <div className="btn-container">
           <button
             onClick={() => {}}
             className="connect-wallet-button"
-            disabled={account !== ""}
+            disabled={account !== ''}
           >
-            {account !== ""
-              ? account?.substring(0, 8) + "..."
-              : "Connect Wallet"}
+            {account !== ''
+              ? account?.substring(0, 8) + '...'
+              : 'Connect Wallet'}
           </button>
         </div>
       </nav>
@@ -62,12 +62,20 @@ function App() {
       <div className="main-app">
         <div className="modal">
           <div className="brand-container">
-            <img src={cre8rLogo} alt="cre8r logo" />
+            <img src={cre8rAltLogo} alt="cre8r logo" />
           </div>
-          <div>
+          <div className="vested-container">
+            <h3>0.0 vested</h3>
+            <p>0.00 RDL Total</p>
+          </div>
+          <div className="available-container">
             <p>
-              Available:{" "}
-              <span>{`${balance.length ? balance : "0,00"}`} CRE8R</span>
+              Available:{' '}
+              <span>{`${balance.length ? balance : '0,00'}`} CRE8R</span>
+            </p>
+            <p>
+              Claimed:{' '}
+              <span>{`${balance.length ? balance : '0,00'}`} CRE8R</span>
             </p>
           </div>
           <div className="btn-container">
