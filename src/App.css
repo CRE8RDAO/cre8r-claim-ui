@@ -57,8 +57,13 @@ nav .btn-container {
 }
 
 .main-app .modal .brand-container {
-  /* padding-left: 3rem; */
   margin-bottom: 60px;
+}
+
+.brand-container > img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
 }
 
 .vested-container {
@@ -90,8 +95,14 @@ nav .btn-container {
 }
 
 @media (max-width: 800px) {
+  .main-app {
+    height: 55rem;
+  }
   .main-app .modal {
     width: 22.5rem;
+  }
+  .main-app .modal .brand-container {
+    margin-bottom: 50px;
   }
   .available-container {
     flex-direction: column;
