@@ -5,7 +5,7 @@ import abi from "../../contracts/claim.json";
 const initialState = {
   connected: false,
   account: "",
-  balance: null,
+  balance: 0,
   status_message: "",
 };
 
@@ -77,7 +77,8 @@ export const loadClaimableBalance = () => async (dispatch, getState) => {
       );
 
       const vestedAmount = await claimContract.getClaim(account);
-      dispatch(balance_loaded(vestedAmount.toString()));
+      const balance = vestedAmount.toNumber();
+      dispatch(balance_loaded(balance));
     }
   } catch (error) {
     console.log("error", error);

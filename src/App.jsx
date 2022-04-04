@@ -6,7 +6,7 @@ import {
   claimBalance,
 } from "./store/slices/web3Slice";
 import { toast } from "react-toastify";
-import cre8rLogo from "./assets/cre8r_logo.png";
+import cre8rLogo from "./assets/CR8R.png";
 import "./App.css";
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
           </div>
           <div>
             <p>
-              Available: <span>{`${balance}`} CRE8R</span>
+              Available: <span>{`${balance ?? "0,0"}`} CRE8R</span>
             </p>
           </div>
           <div className="btn-container">
