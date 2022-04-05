@@ -1,18 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  loadWeb3,
-  loadClaimableBalance,
-  claimBalance,
-} from './store/slices/web3Slice';
+import { loadWeb3, loadClaimableBalance, claimBalance } from './store/slices/web3Slice';
 import { toast } from 'react-toastify';
 import cre8rLogo from './assets/logo-515x512.png';
 import './App.css';
 
 function App() {
-  const { account, balance, status_message } = useSelector(
-    (state) => state.web3
-  );
+  const { account, balance, status_message } = useSelector(state => state.web3);
 
   const dispatch = useDispatch();
 
@@ -46,14 +40,8 @@ function App() {
           <img src={cre8rLogo} alt="cre8r logo" />
         </div>
         <div className="btn-container">
-          <button
-            onClick={() => {}}
-            className="connect-wallet-button"
-            disabled={account !== ''}
-          >
-            {account !== ''
-              ? account?.substring(0, 8) + '...'
-              : 'Connect Wallet'}
+          <button onClick={() => {}} className="connect-wallet-button" disabled={account !== ''}>
+            {account !== '' ? account?.substring(0, 8) + '...' : 'Connect Wallet'}
           </button>
         </div>
       </nav>
@@ -64,18 +52,18 @@ function App() {
             <img src={cre8rLogo} alt="cre8r logo" />
           </div>
           <div className="vested-container">
-            <h3>0.0 vested</h3>
-            <p>0.00 RDL Total</p>
+            <h3>Available:</h3>
+            <p>{`${balance.length ? balance : '0,00'}`} CRE8R</p>
           </div>
           <div className="available-container">
-            <p>
-              Available:{' '}
-              <span>{`${balance.length ? balance : '0,00'}`} CRE8R</span>
-            </p>
-            <p>
+            {/* <p>
+              {' '}
+              <span></span>
+            </p> */}
+            {/* <p>
               Claimed:{' '}
               <span>{`${balance.length ? balance : '0,00'}`} CRE8R</span>
-            </p>
+            </p> */}
           </div>
           <div className="btn-container">
             {account ? (
